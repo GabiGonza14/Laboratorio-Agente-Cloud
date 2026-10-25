@@ -38,6 +38,24 @@ class TestTasks(unittest.TestCase):
         self.assertEqual(len(resultado), 1)
         self.assertEqual(resultado[0]["titulo"], "Practicar")
 
+    def test_pendientes_categoria_inexistente_devuelve_vacia(self):
+        tareas = []
+        agregar_tarea(tareas, "Practicar", "Backend")
+        agregar_tarea(tareas, "Leer", "frontend")
+
+        resultado = pendientes(tareas, "mobile")
+        self.assertEqual(resultado, [])
+
+    def test_pendientes_categoria_solo_espacios_devuelve_todas(self):
+        tareas = []
+        agregar_tarea(tareas, "Practicar", "Backend")
+        agregar_tarea(tareas, "Leer", "frontend")
+        completar_tarea(tareas, 2)
+
+        resultado = pendientes(tareas, "   ")
+        self.assertEqual(len(resultado), 1)
+        self.assertEqual(resultado[0]["titulo"], "Practicar")
+
 
 if __name__ == "__main__":
     unittest.main()
